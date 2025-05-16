@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script>
+    //Leaflet CSS and JS
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+</head>
+<body>
+    <div id="map" style="width: 100%; height: 500px;"></div>
+
+    <script>
+        //Initialize the map and set view to a specific location (latitude, longitude)
+        var map = L.map('map').setView([51.505, -0.09], 13);
+
+        //Add a tile layer (OpenStreetMap in this case)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        //Add a marker
+        L.marker([51.505, -0.09]).addTo(map).bindPopup('A sample marker.').openPopup();
+
+        //Geolocation - get user's location
+        map.locate({setView: true, maxZoom: 16});
+
+        map.on('locationfound', function(e) {
+            var marker = L.marker([e.latitude, e.longitude]).bindPopup('Your location.').addTo(map).openPopup();
+        });
+
+        map.on('locationerror', function(e) {
+            alert("Location access denied.");
+        });
+    </script>
+</body>
+</html>
